@@ -28,25 +28,33 @@ def peer_as_cymru(IP,TIME=None,ISOT=None):
     data = s.recv(BUFFER_SIZE)
     s.close()
     
-    asn = data.split('\n')[1].split('|')[0].strip()
-    oip = data.split('\n')[1].split('|')[1].strip()
-    ipb = data.split('\n')[1].split('|')[2].strip()
-    cun = data.split('\n')[1].split('|')[3].strip()
-    reg = data.split('\n')[1].split('|')[4].strip()
-    alc = data.split('\n')[1].split('|')[5].strip()
-    inf = data.split('\n')[1].split('|')[6].strip()
-    lan = data.split('\n')[1].split('|')[7].strip()
-    res = {'PEER_AS' : asn,
-           'IP' : oip,
-           'BGP_Prefix' : ipb,
-           'CC' : cun,
-           'Registry' : reg,
-           'Allocated' : alc, 
-           'Info' : inf,
-           'AS_Name': lan}
+    test = data.split('\n')
+    answers = len(test)-1
+    i = 1
+    res = []
+    while i < answers:
+        asn = data.split('\n')[i].split('|')[0].strip()
+        oip = data.split('\n')[i].split('|')[1].strip()
+        ipb = data.split('\n')[i].split('|')[2].strip()
+        cun = data.split('\n')[i].split('|')[3].strip()
+        reg = data.split('\n')[i].split('|')[4].strip()
+        alc = data.split('\n')[i].split('|')[5].strip()
+        inf = data.split('\n')[i].split('|')[6].strip()
+        lan = data.split('\n')[i].split('|')[7].strip()
+        res.append({'PEER_AS' : asn,
+               'IP' : oip,
+               'BGP_Prefix' : ipb,
+               'CC' : cun,
+               'Registry' : reg,
+               'Allocated' : alc, 
+               'Info' : inf,
+               'AS_Name': lan})
+        i+=1
     return(res)
 
 #Eg. '4.2.2.2 2004-12-10 11:33:21 GMT' 
 print peer_as_cymru('4.2.2.2',TIME='2004-12-10 11:33:21 GMT')
 print peer_as_cymru('4.2.2.2',ISOT='2004-12-10T11:33:21.000Z')
-print peer_as_cymru('4.2.2.2')
+lister = peer_as_cymru('4.2.2.2')
+for li in lister:
+    print li
