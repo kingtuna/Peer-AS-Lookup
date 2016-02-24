@@ -14,7 +14,7 @@ def peer_as_cymru(IP,TIME=None,ISOT=None):
     BUILD = " -v " + str(IP)
     if ISOT is not None:
         NT = ISOT.strip('Z').split('T')
-        TIME = NT[0] + ' ' + NT[1].split('.')[0] + ' GMT'
+        TIME = NT[0] + ' ' + NT[1].split('.')[0] + ' UTC'
     if TIME is not None:
         BUILD = str(BUILD) + str(' '+ TIME+"\r\n")
     else:
